@@ -1,0 +1,40 @@
+{
+    "algorithm": "ARIMA",
+    "city": "Manila",
+    "task": "Rainfall Intensity",
+    "type": "classification",
+    "metrics": {
+        "Accuracy": 65.48
+    },
+    "matrix": [
+        [
+            131,
+            33,
+            20
+        ],
+        [
+            5,
+            20,
+            28
+        ],
+        [
+            6,
+            24,
+            69
+        ]
+    ],
+    "report": [
+        {
+            "Class": "Light",
+            "F1": 0.80
+        },
+        {
+            "Class": "Moderate",
+            "F1": 0.31
+        },
+        {
+            "Class": "Heavy",
+            "F1": 0.64
+        }
+    ]
+}

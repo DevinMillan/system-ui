@@ -1,0 +1,40 @@
+{
+    "algorithm": "GRU",
+    "city": "Baguio City",
+    "task": "Rainfall Intensity",
+    "type": "classification",
+    "metrics": {
+        "Accuracy": 59.82
+    },
+    "matrix": [
+        [
+            115,
+            0,
+            26
+        ],
+        [
+            36,
+            0,
+            40
+        ],
+        [
+            33,
+            0,
+            86
+        ]
+    ],
+    "report": [
+        {
+            "Class": "Light",
+            "F1": 0.71
+        },
+        {
+            "Class": "Moderate",
+            "F1": 0.0
+        },
+        {
+            "Class": "Heavy",
+            "F1": 0.63
+        }
+    ]
+}
