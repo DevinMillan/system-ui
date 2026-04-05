@@ -8,24 +8,50 @@ import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Thesis: Weather Forecasting Dashboard", layout="wide")
 
-RESULTS_DIR = "results"
-IMAGE_DIR = "result_images"
+RESULTS_CSV = "results_index.csv"
+IMAGE_DIRS = ["results_images", "result_images"]
 IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg", ".webp")
 SUPPORTED_ALGORITHMS = ["ARIMA", "GRU", "RNN", "LSTM", "LINEAR REGRESSION"]
+METRIC_COLUMNS = [
+    ("Accuracy", "accuracy"),
+    ("MAE", "mae"),
+    ("R2", "r2"),
+    ("MSE", "mse"),
+]
 
 
 def load_all_results():
-    all_data = []
-    if not os.path.exists(RESULTS_DIR):
-        os.makedirs(RESULTS_DIR)
+    if not os.path.exists(RESULTS_CSV):
+        return []
 
-    for filename in os.listdir(RESULTS_DIR):
-        if filename.endswith(".json"):
-            with open(os.path.join(RESULTS_DIR, filename), "r") as f:
-                item = json.load(f)
-                item["_source_file"] = filename
-                all_data.append(item)
-    return all_data
+    df = pd.read_csv(RESULTS_CSV, keep_default_na=False)
+    results = []
+    for _, row in df.iterrows():
+        metrics = {}
+        for label, column in METRIC_COLUMNS:
+            value = row.get(column, "N/A")
+            metrics[label] = value if value != "" else "N/A"
+
+        report_raw = row.get("report_json", "[]") or "[]"
+        try:
+            report = json.loads(report_raw)
+        except json.JSONDecodeError:
+            report = []
+
+        is_placeholder = str(row.get("is_placeholder", "False")).strip().lower() == "true"
+        results.append(
+            {
+                "algorithm": row["algorithm"],
+                "city": row["city"],
+                "task": row["task"],
+                "type": row["type"],
+                "metrics": metrics,
+                "report": report,
+                "image_name": row.get("image_name", ""),
+                "_is_placeholder": is_placeholder,
+            }
+        )
+    return results
 
 
 def disable_sidebar_select_typing():
@@ -70,92 +96,66 @@ def disable_sidebar_select_typing():
     )
 
 
-def slugify(value):
-    return "".join(ch.lower() if ch.isalnum() else "_" for ch in value).strip("_")
-
-
 def build_candidate_names(result):
-    base_name = os.path.splitext(result.get("_source_file", ""))[0]
-    algorithm = slugify(result["algorithm"])
-    city = slugify(result["city"])
-    task = slugify(result["task"])
-    result_type = slugify(result["type"])
+    image_name = result.get("image_name", "").strip().lower()
+    candidates = [image_name] if image_name else []
 
-    candidates = [
-        base_name,
-        f"{algorithm}_{city}_{task}",
-        f"{algorithm}_{city}_{task}_{result_type}",
-    ]
-    return [name for name in candidates if name]
+    if result.get("algorithm") and result.get("city") and result.get("task"):
+        fallback_name = "_".join(
+            "".join(ch.lower() if ch.isalnum() else "_" for ch in part).strip("_")
+            for part in [result["algorithm"], result["city"], result["task"]]
+        )
+        candidates.append(fallback_name)
+
+    return [name for name in dict.fromkeys(candidates) if name]
 
 
 def find_result_images(result):
-    if not os.path.isdir(IMAGE_DIR):
+    candidate_names = build_candidate_names(result)
+    if not candidate_names:
         return []
 
-    candidate_names = build_candidate_names(result)
     exact_matches = []
-
-    for name in candidate_names:
-        for ext in IMAGE_EXTENSIONS:
-            path = os.path.join(IMAGE_DIR, f"{name}{ext}")
-            if os.path.exists(path):
-                exact_matches.append(path)
+    for image_dir in IMAGE_DIRS:
+        if not os.path.isdir(image_dir):
+            continue
+        for name in candidate_names:
+            for ext in IMAGE_EXTENSIONS:
+                path = os.path.join(image_dir, f"{name}{ext}")
+                if os.path.exists(path):
+                    exact_matches.append(path)
 
     if exact_matches:
         return sorted(dict.fromkeys(exact_matches))
 
     partial_matches = []
-    for file_name in os.listdir(IMAGE_DIR):
-        full_path = os.path.join(IMAGE_DIR, file_name)
-        stem, ext = os.path.splitext(file_name)
-        if not os.path.isfile(full_path) or ext.lower() not in IMAGE_EXTENSIONS:
+    for image_dir in IMAGE_DIRS:
+        if not os.path.isdir(image_dir):
             continue
-        if any(candidate in stem.lower() for candidate in candidate_names):
-            partial_matches.append(full_path)
-
-    return sorted(partial_matches)
-
-
-def with_placeholder_results(results):
-    expanded = list(results)
-    seen = {(item["algorithm"], item["city"], item["task"]) for item in results}
-    combo_types = {}
-
-    for item in results:
-        combo_types[(item["city"], item["task"])] = item["type"]
-
-    for (city, task), result_type in combo_types.items():
-        for algorithm in SUPPORTED_ALGORITHMS:
-            key = (algorithm, city, task)
-            if key in seen:
+        for file_name in os.listdir(image_dir):
+            full_path = os.path.join(image_dir, file_name)
+            stem, ext = os.path.splitext(file_name)
+            if not os.path.isfile(full_path) or ext.lower() not in IMAGE_EXTENSIONS:
                 continue
+            if any(candidate in stem.lower() for candidate in candidate_names):
+                partial_matches.append(full_path)
 
-            metrics = {"Accuracy": "N/A"}
-            if result_type == "regression":
-                metrics.update({"MAE": "N/A", "R2": "N/A", "MSE": "N/A"})
-
-            expanded.append(
-                {
-                    "algorithm": algorithm,
-                    "city": city,
-                    "task": task,
-                    "type": result_type,
-                    "metrics": metrics,
-                    "report": [],
-                    "_source_file": "",
-                    "_is_placeholder": True,
-                }
-            )
-
-    return expanded
+    return sorted(dict.fromkeys(partial_matches))
 
 
-results = with_placeholder_results(load_all_results())
+def format_metric(value):
+    if isinstance(value, str):
+        return value
+    if pd.isna(value):
+        return "N/A"
+    return str(value)
+
+
+results = load_all_results()
 
 st.sidebar.title("Thesis Results")
 if not results:
-    st.sidebar.warning("No files found in /results folder.")
+    st.sidebar.warning(f"No data found in `{RESULTS_CSV}`.")
 else:
     mode = st.sidebar.radio("View Mode", ["Individual Analysis", "Comparison Leaderboard"])
 
@@ -181,9 +181,10 @@ else:
         if curr:
             st.title(f"{sel_algo}: {sel_task} in {sel_city}")
 
-            cols = st.columns(len(curr["metrics"]))
-            for i, (label, val) in enumerate(curr["metrics"].items()):
-                cols[i].metric(label, f"{val}")
+            metric_items = list(curr["metrics"].items())
+            cols = st.columns(len(metric_items))
+            for i, (label, val) in enumerate(metric_items):
+                cols[i].metric(label, format_metric(val))
 
             st.divider()
             result_images = find_result_images(curr)
@@ -197,10 +198,9 @@ else:
                 if curr.get("_is_placeholder"):
                     st.info("This algorithm is currently a placeholder for this city and weather variable. Metrics and visuals are not available yet.")
                 else:
-                    example_name = os.path.splitext(curr.get("_source_file", ""))[0]
                     st.info(
-                        f"No image files found for this selection in the `{IMAGE_DIR}` folder. "
-                        f"Add an image like `{example_name}.png`."
+                        "No image files found for this selection in the `results_images` folder. "
+                        f"Add an image like `{curr.get('image_name', '')}.png`."
                     )
 
             if curr["type"] == "classification" and curr.get("report"):
@@ -218,9 +218,9 @@ else:
                     "Algorithm": r["algorithm"],
                     "City": r["city"],
                     "Task": r["task"],
-                    "Accuracy": r["metrics"].get("Accuracy", "N/A"),
-                    "R2 Score": r["metrics"].get("R2", "N/A"),
-                    "MAE": r["metrics"].get("MAE", "N/A"),
+                    "Accuracy": format_metric(r["metrics"].get("Accuracy", "N/A")),
+                    "R2 Score": format_metric(r["metrics"].get("R2", "N/A")),
+                    "MAE": format_metric(r["metrics"].get("MAE", "N/A")),
                 }
             )
 
