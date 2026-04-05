@@ -1,1 +1,23 @@
-{"algorithm": "GRU", "city": "Manila", "task": "Rainfall Intensity", "type": "classification", "metrics": {"Accuracy": 52.98}, "matrix": [[175, 0, 0], [59, 0, 0], [99, 0, 3]], "report": [{"Class": "Light", "F1": 0.69}, {"Class": "Moderate", "F1": 0.0}, {"Class": "Heavy", "F1": 0.06}]}
+{
+    "algorithm": "GRU",
+    "city": "Manila",
+    "task": "Rainfall Intensity",
+    "type": "classification",
+    "metrics": {
+        "Accuracy": 52.98
+    },
+    "report": [
+        {
+            "Class": "Light",
+            "F1": 0.69
+        },
+        {
+            "Class": "Moderate",
+            "F1": 0.0
+        },
+        {
+            "Class": "Heavy",
+            "F1": 0.06
+        }
+    ]
+}

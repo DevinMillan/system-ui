@@ -6,27 +6,10 @@
     "metrics": {
         "Accuracy": 65.48
     },
-    "matrix": [
-        [
-            131,
-            33,
-            20
-        ],
-        [
-            5,
-            20,
-            28
-        ],
-        [
-            6,
-            24,
-            69
-        ]
-    ],
     "report": [
         {
             "Class": "Light",
-            "F1": 0.80
+            "F1": 0.8
         },
         {
             "Class": "Moderate",

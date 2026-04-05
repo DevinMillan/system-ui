@@ -4,25 +4,8 @@
     "task": "Rainfall Intensity",
     "type": "classification",
     "metrics": {
-        "Accuracy": 62.20
+        "Accuracy": 62.2
     },
-    "matrix": [
-        [
-            102,
-            23,
-            32
-        ],
-        [
-            9,
-            21,
-            33
-        ],
-        [
-            9,
-            21,
-            86
-        ]
-    ],
     "report": [
         {
             "Class": "Light",
