@@ -4,6 +4,7 @@ import json
 import os
 import plotly.express as px
 import plotly.graph_objects as go
+import streamlit.components.v1 as components
 
 st.set_page_config(page_title="Thesis: Weather Forecasting Dashboard", layout="wide")
 
@@ -17,6 +18,48 @@ def load_all_results():
             with open(os.path.join('results', filename), 'r') as f:
                 all_data.append(json.load(f))
     return all_data
+
+
+def disable_sidebar_select_typing():
+    components.html(
+        """
+        <script>
+        const disableTyping = () => {
+            const parentDoc = window.parent.document;
+            const selects = parentDoc.querySelectorAll('[data-testid="stSidebar"] [data-baseweb="select"] input');
+
+            selects.forEach((input) => {
+                input.setAttribute("readonly", "readonly");
+                input.setAttribute("inputmode", "none");
+
+                if (input.dataset.typingDisabled === "true") {
+                    return;
+                }
+
+                const blockTyping = (event) => {
+                    const allowedKeys = ["Tab", "Enter", "Escape", "ArrowDown", "ArrowUp", "ArrowLeft", "ArrowRight", "Home", "End"];
+                    if (!allowedKeys.includes(event.key)) {
+                        event.preventDefault();
+                    }
+                };
+
+                input.addEventListener("keydown", blockTyping);
+                input.addEventListener("paste", (event) => event.preventDefault());
+                input.addEventListener("drop", (event) => event.preventDefault());
+                input.dataset.typingDisabled = "true";
+            });
+        };
+
+        disableTyping();
+        new MutationObserver(disableTyping).observe(window.parent.document.body, {
+            childList: true,
+            subtree: true,
+        });
+        </script>
+        """,
+        height=0,
+        width=0,
+    )
 
 results = load_all_results()
 
@@ -35,6 +78,7 @@ else:
         sel_algo = st.sidebar.selectbox("Algorithm", algos)
         sel_city = st.sidebar.selectbox("Location", cities)
         sel_task = st.sidebar.selectbox("Weather Variable", tasks)
+        disable_sidebar_select_typing()
 
         # Filter
         curr = next((r for r in results if r['algorithm'] == sel_algo 
