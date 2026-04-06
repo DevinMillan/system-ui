@@ -1,51 +1,51 @@
 algorithm,city,task,type,accuracy,mae,r2,mse,report_json,image_name,is_placeholder
 ARIMA,Baguio City,Rainfall Intensity,classification,62.2,N/A,N/A,N/A,"[{""Class"": ""Light"", ""F1"": 0.74}, {""Class"": ""Moderate"", ""F1"": 0.33}, {""Class"": ""Heavy"", ""F1"": 0.64}]",arima_baguio_intensity,False
-ARIMA,Baguio City,Pressure,regression,51.82,0.903,0.768,2.011,[],arima_baguio_pressure,False
-ARIMA,Baguio City,Rainfall Amount,regression,23.79,7.0,0.179,352.49,[],arima_baguio_rain,False
-ARIMA,Baguio City,Temperature,regression,97.93,0.399,0.8,0.284,[],arima_baguio_temp,False
-ARIMA,Baguio City,Wind Speed,regression,70.82,1.455,0.413,5.125,[],arima_baguio_wind,False
-ARIMA,Manila,Rainfall Intensity,classification,65.48,N/A,N/A,N/A,"[{""Class"": ""Light"", ""F1"": 0.8}, {""Class"": ""Moderate"", ""F1"": 0.31}, {""Class"": ""Heavy"", ""F1"": 0.64}]",arima_manila_intensity,False
-ARIMA,Manila,Pressure,regression,54.76,0.79,0.795,1.413,[],arima_manila_pressure,False
-ARIMA,Manila,Rainfall Amount,regression,26.58,4.17,0.214,82.05,[],arima_manila_rain,False
-ARIMA,Manila,Temperature,regression,98.52,0.421,0.838,0.316,[],arima_manila_temp,False
-ARIMA,Manila,Wind Speed,regression,90.39,0.786,0.693,1.613,[],arima_manila_wind,False
 GRU,Baguio City,Rainfall Intensity,classification,59.82,N/A,N/A,N/A,"[{""Class"": ""Light"", ""F1"": 0.71}, {""Class"": ""Moderate"", ""F1"": 0.0}, {""Class"": ""Heavy"", ""F1"": 0.63}]",gru_baguio_intensity,False
-GRU,Baguio City,Pressure,regression,58.92,0.778,0.831,1.443,[],gru_baguio_pressure,False
-GRU,Baguio City,Rainfall Amount,regression,22.45,7.28,0.141,365.73,[],gru_baguio_rain,False
-GRU,Baguio City,Temperature,regression,97.88,0.407,0.79,0.299,[],gru_baguio_temp,False
-GRU,Baguio City,Wind Speed,regression,69.52,1.523,0.436,4.938,[],gru_baguio_wind,False
-GRU,Manila,Rainfall Intensity,classification,52.98,N/A,N/A,N/A,"[{""Class"": ""Light"", ""F1"": 0.69}, {""Class"": ""Moderate"", ""F1"": 0.0}, {""Class"": ""Heavy"", ""F1"": 0.06}]",gru_manila_intensity,False
-GRU,Manila,Pressure,regression,59.95,0.718,0.84,1.087,[],gru_manila_pressure,False
-GRU,Manila,Rainfall Amount,regression,26.36,4.32,0.195,85.57,[],gru_manila_rain,False
-GRU,Manila,Temperature,regression,98.42,0.448,0.819,0.352,[],gru_manila_temp,False
-GRU,Manila,Wind Speed,regression,90.82,0.749,0.712,1.519,[],gru_manila_wind,False
-RNN,Baguio City,Pressure,regression,N/A,N/A,N/A,N/A,[],rnn_baguio_pressure,True
-LSTM,Baguio City,Pressure,regression,N/A,N/A,N/A,N/A,[],lstm_baguio_pressure,True
-LINEAR REGRESSION,Baguio City,Pressure,regression,N/A,N/A,N/A,N/A,[],linear_regression_baguio_pressure,True
-RNN,Baguio City,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],rnn_baguio_rain,True
-LSTM,Baguio City,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],lstm_baguio_rain,True
-LINEAR REGRESSION,Baguio City,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],linear_regression_baguio_rain,True
 RNN,Baguio City,Rainfall Intensity,classification,N/A,N/A,N/A,N/A,[],rnn_baguio_intensity,True
 LSTM,Baguio City,Rainfall Intensity,classification,N/A,N/A,N/A,N/A,[],lstm_baguio_intensity,True
 LINEAR REGRESSION,Baguio City,Rainfall Intensity,classification,N/A,N/A,N/A,N/A,[],linear_regression_baguio_intensity,True
+ARIMA,Baguio City,Pressure,regression,51.82,0.903,0.768,2.011,[],arima_baguio_pressure,False
+GRU,Baguio City,Pressure,regression,58.92,0.778,0.831,1.443,[],gru_baguio_pressure,False
+RNN,Baguio City,Pressure,regression,N/A,N/A,N/A,N/A,[],rnn_baguio_pressure,True
+LSTM,Baguio City,Pressure,regression,N/A,N/A,N/A,N/A,[],lstm_baguio_pressure,True
+LINEAR REGRESSION,Baguio City,Pressure,regression,N/A,N/A,N/A,N/A,[],linear_regression_baguio_pressure,True
+ARIMA,Baguio City,Rainfall Amount,regression,23.79,7.0,0.179,352.49,[],arima_baguio_rain,False
+GRU,Baguio City,Rainfall Amount,regression,22.45,7.28,0.141,365.73,[],gru_baguio_rain,False
+RNN,Baguio City,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],rnn_baguio_rain,True
+LSTM,Baguio City,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],lstm_baguio_rain,True
+LINEAR REGRESSION,Baguio City,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],linear_regression_baguio_rain,True
+ARIMA,Baguio City,Temperature,regression,97.93,0.399,0.8,0.284,[],arima_baguio_temp,False
+GRU,Baguio City,Temperature,regression,97.88,0.407,0.79,0.299,[],gru_baguio_temp,False
 RNN,Baguio City,Temperature,regression,N/A,N/A,N/A,N/A,[],rnn_baguio_temp,True
 LSTM,Baguio City,Temperature,regression,N/A,N/A,N/A,N/A,[],lstm_baguio_temp,True
 LINEAR REGRESSION,Baguio City,Temperature,regression,N/A,N/A,N/A,N/A,[],linear_regression_baguio_temp,True
+ARIMA,Baguio City,Wind Speed,regression,70.82,1.455,0.413,5.125,[],arima_baguio_wind,False
+GRU,Baguio City,Wind Speed,regression,69.52,1.523,0.436,4.938,[],gru_baguio_wind,False
 RNN,Baguio City,Wind Speed,regression,N/A,N/A,N/A,N/A,[],rnn_baguio_wind,True
 LSTM,Baguio City,Wind Speed,regression,N/A,N/A,N/A,N/A,[],lstm_baguio_wind,True
 LINEAR REGRESSION,Baguio City,Wind Speed,regression,N/A,N/A,N/A,N/A,[],linear_regression_baguio_wind,True
-RNN,Manila,Pressure,regression,N/A,N/A,N/A,N/A,[],rnn_manila_pressure,True
-LSTM,Manila,Pressure,regression,N/A,N/A,N/A,N/A,[],lstm_manila_pressure,True
-LINEAR REGRESSION,Manila,Pressure,regression,N/A,N/A,N/A,N/A,[],linear_regression_manila_pressure,True
-RNN,Manila,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],rnn_manila_rain,True
-LSTM,Manila,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],lstm_manila_rain,True
-LINEAR REGRESSION,Manila,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],linear_regression_manila_rain,True
+ARIMA,Manila,Rainfall Intensity,classification,65.48,N/A,N/A,N/A,"[{""Class"": ""Light"", ""F1"": 0.8}, {""Class"": ""Moderate"", ""F1"": 0.31}, {""Class"": ""Heavy"", ""F1"": 0.64}]",arima_manila_intensity,False
+GRU,Manila,Rainfall Intensity,classification,52.98,N/A,N/A,N/A,"[{""Class"": ""Light"", ""F1"": 0.69}, {""Class"": ""Moderate"", ""F1"": 0.0}, {""Class"": ""Heavy"", ""F1"": 0.06}]",gru_manila_intensity,False
 RNN,Manila,Rainfall Intensity,classification,N/A,N/A,N/A,N/A,[],rnn_manila_intensity,True
 LSTM,Manila,Rainfall Intensity,classification,N/A,N/A,N/A,N/A,[],lstm_manila_intensity,True
 LINEAR REGRESSION,Manila,Rainfall Intensity,classification,N/A,N/A,N/A,N/A,[],linear_regression_manila_intensity,True
+ARIMA,Manila,Pressure,regression,54.76,0.79,0.795,1.413,[],arima_manila_pressure,False
+GRU,Manila,Pressure,regression,59.95,0.718,0.84,1.087,[],gru_manila_pressure,False
+RNN,Manila,Pressure,regression,N/A,N/A,N/A,N/A,[],rnn_manila_pressure,True
+LSTM,Manila,Pressure,regression,N/A,N/A,N/A,N/A,[],lstm_manila_pressure,True
+LINEAR REGRESSION,Manila,Pressure,regression,N/A,N/A,N/A,N/A,[],linear_regression_manila_pressure,True
+ARIMA,Manila,Rainfall Amount,regression,26.58,4.17,0.214,82.05,[],arima_manila_rain,False
+GRU,Manila,Rainfall Amount,regression,26.36,4.32,0.195,85.57,[],gru_manila_rain,False
+RNN,Manila,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],rnn_manila_rain,True
+LSTM,Manila,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],lstm_manila_rain,True
+LINEAR REGRESSION,Manila,Rainfall Amount,regression,N/A,N/A,N/A,N/A,[],linear_regression_manila_rain,True
+ARIMA,Manila,Temperature,regression,98.52,0.421,0.838,0.316,[],arima_manila_temp,False
+GRU,Manila,Temperature,regression,98.42,0.448,0.819,0.352,[],gru_manila_temp,False
 RNN,Manila,Temperature,regression,N/A,N/A,N/A,N/A,[],rnn_manila_temp,True
 LSTM,Manila,Temperature,regression,N/A,N/A,N/A,N/A,[],lstm_manila_temp,True
 LINEAR REGRESSION,Manila,Temperature,regression,N/A,N/A,N/A,N/A,[],linear_regression_manila_temp,True
+ARIMA,Manila,Wind Speed,regression,90.39,0.786,0.693,1.613,[],arima_manila_wind,False
+GRU,Manila,Wind Speed,regression,90.82,0.749,0.712,1.519,[],gru_manila_wind,False
 RNN,Manila,Wind Speed,regression,N/A,N/A,N/A,N/A,[],rnn_manila_wind,True
 LSTM,Manila,Wind Speed,regression,N/A,N/A,N/A,N/A,[],lstm_manila_wind,True
 LINEAR REGRESSION,Manila,Wind Speed,regression,N/A,N/A,N/A,N/A,[],linear_regression_manila_wind,True
