@@ -27,8 +27,9 @@ def load_all_results():
     df = pd.read_csv(RESULTS_CSV, keep_default_na=False)
     results = []
     for _, row in df.iterrows():
+        metric_columns = [("Accuracy", "accuracy")] if row["type"] == "classification" else METRIC_COLUMNS
         metrics = {}
-        for label, column in METRIC_COLUMNS:
+        for label, column in metric_columns:
             value = row.get(column, "N/A")
             metrics[label] = value if value != "" else "N/A"
 
@@ -190,10 +191,21 @@ else:
             result_images = find_result_images(curr)
 
             if result_images:
-                st.subheader("Result Visuals")
-                for image_path in result_images:
-                    image_label = os.path.splitext(os.path.basename(image_path))[0].replace("_", " ").title()
-                    st.image(image_path, caption=image_label, use_container_width=True)
+                if curr["type"] == "classification" and curr.get("report"):
+                    left_col, right_col = st.columns([1.7, 1], gap="large")
+                    with left_col:
+                        st.subheader("Confusion Matrix")
+                        for image_path in result_images:
+                            image_label = os.path.splitext(os.path.basename(image_path))[0].replace("_", " ").title()
+                            st.image(image_path, caption=image_label, use_container_width=True)
+                    with right_col:
+                        st.subheader("Class Breakdown")
+                        st.table(pd.DataFrame(curr["report"]))
+                else:
+                    st.subheader("Result Visuals")
+                    for image_path in result_images:
+                        image_label = os.path.splitext(os.path.basename(image_path))[0].replace("_", " ").title()
+                        st.image(image_path, caption=image_label, use_container_width=True)
             else:
                 if curr.get("_is_placeholder"):
                     st.info("This algorithm is currently a placeholder for this city and weather variable. Metrics and visuals are not available yet.")
@@ -202,10 +214,9 @@ else:
                         "No image files found for this selection in the `results_images` folder. "
                         f"Add an image like `{curr.get('image_name', '')}.png`."
                     )
-
-            if curr["type"] == "classification" and curr.get("report"):
-                st.subheader("Class Breakdown")
-                st.table(pd.DataFrame(curr["report"]))
+                if curr["type"] == "classification" and curr.get("report"):
+                    st.subheader("Class Breakdown")
+                    st.table(pd.DataFrame(curr["report"]))
         else:
             st.error("Select a combination to view results.")
 
